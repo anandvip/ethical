@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Complete Ethical Hacking Course – Interactive Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0c10;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      color: #e4e6eb;
+      line-height: 1.5;
+      padding: 1rem;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* header */
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #2a2e35;
+      padding-bottom: 1rem;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      color: #8e98a3;
+      font-size: 1rem;
+    }
+
+    /* progress bar */
+    .progress-wrapper {
+      background: #1e1f25;
+      border-radius: 30px;
+      padding: 0.3rem;
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-bar-container {
+      flex: 3;
+      background: #2d2f36;
+      border-radius: 30px;
+      height: 12px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #00c6fb, #005bea);
+      border-radius: 30px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-weight: bold;
+      font-size: 0.9rem;
+      background: #2d2f36;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    .reset-btn {
+      background: #2d2f36;
+      border: none;
+      color: #ff8c5a;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: 0.2s;
+    }
+
+    .reset-btn:hover {
+      background: #3e414b;
+    }
+
+    /* weekly schedule card */
+    .schedule-card {
+      background: #15171e;
+      border-radius: 24px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid #292e36;
+    }
+
+    .schedule-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      color: #7c9eff;
+    }
+
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .schedule-table th, .schedule-table td {
+      border: 1px solid #2a2e36;
+      padding: 0.6rem;
+      text-align: left;
+    }
+
+    .schedule-table th {
+      background: #1e2128;
+      color: #bdc4d0;
+    }
+
+    /* module grid */
+    .modules-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .module-card {
+      background: #111318;
+      border-radius: 20px;
+      border-left: 5px solid #2b5f8a;
+      transition: 0.2s;
+      overflow: hidden;
+    }
+
+    .module-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      background: #0f1117;
+      transition: background 0.2s;
+    }
+
+    .module-header:hover {
+      background: #191d26;
+    }
+
+    .module-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .module-title h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .module-badge {
+      background: #1e2a3a;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 40px;
+      color: #9bb7d4;
+    }
+
+    .checkbox-complete {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      accent-color: #2b8cff;
+      transform: scale(1.1);
+    }
+
+    .toggle-icon {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #6c86a3;
+      transition: transform 0.2s;
+    }
+
+    .module-content {
+      padding: 0 1.2rem 1rem 1.2rem;
+      border-top: 1px solid #23262e;
+      display: none;
+    }
+
+    .module-content.open {
+      display: block;
+    }
+
+    .module-content ul {
+      padding-left: 1.5rem;
+      margin: 0.8rem 0;
+    }
+
+    .module-content li {
+      margin: 0.5rem 0;
+      color: #cdd9f4;
+    }
+
+    .module-content p {
+      margin: 0.8rem 0;
+    }
+
+    hr {
+      border-color: #262b33;
+      margin: 0.5rem 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      color: #5f6b7a;
+      border-top: 1px solid #20242c;
+      padding-top: 1.5rem;
+    }
+
+    @media (max-width: 750px) {
+      .module-title h2 {
+        font-size: 1rem;
+      }
+      .schedule-table th, .schedule-table td {
+        font-size: 0.7rem;
+        padding: 0.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🛡️ Complete Ethical Hacking Course</h1>
+    <p>30+ modules • theory + practical • CTF walkthrough • progress tracking</p>
+  </div>
+
+  <!-- progress area -->
+  <div class="progress-wrapper">
+    <div class="progress-bar-container">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-text" id="progressPercent">0% complete</div>
+    <button class="reset-btn" id="resetProgressBtn">Reset progress</button>
+  </div>
+
+  <!-- weekly pacing suggestion -->
+  <div class="schedule-card">
+    <h3>📅 Suggested 9‑week pacing (1h/day, 5 days/week)</h3>
+    <table class="schedule-table">
+      <thead>
+        <tr><th>Week</th><th>Modules covered</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>1–5 (Intro, methodology basics)</td></tr>
+        <tr><td>2</td><td>6–9 (Kill chain, recon, dorks, DNS/whois)</td></tr>
+        <tr><td>3</td><td>10–13 (Social media recon, backend tech, subdomains, WAF)</td></tr>
+        <tr><td>4</td><td>14–17 (NMAP, directory brute, Nessus, exploits)</td></tr>
+        <tr><td>5</td><td>18–20 (Reverse shells, Metasploit basics & attacks)</td></tr>
+        <tr><td>6</td><td>21–23 (Password attacks, SQLi, XSS)</td></tr>
+        <tr><td>7</td><td>24–27 (Post‑exploitation, cracking, persistence, clearing tracks)</td></tr>
+        <tr><td>8</td><td>28–30 (Anonymity, port forwarding, social engineering)</td></tr>
+        <tr><td>9</td><td>31–33 (Instagram/OS phishing, final CTF)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- modules container -->
+  <div class="modules-grid" id="modulesContainer"></div>
+  <footer>
+    ⚡ Based on the complete 30+ hour ethical hacking course • Check modules as you complete them • Progress saved automatically in your browser
+  </footer>
+</div>
+
+<script>
+  // ------------------------------------------------------------------
+  // MODULE DATA – extracted from transcript summary
+  // Each object: title, badge (phase), content (HTML string), id
+  // ------------------------------------------------------------------
+  const modulesData = [
+    { title: "1. What is Hacking & Ethical Hacking", badge: "Foundation", content: "<p><strong>Hacking = curiosity + outsmarting systems.</strong> Difference between black, white, grey hat hackers. Definition of ethical hacking: legally breaking into systems to fix vulnerabilities before malicious hackers exploit them.</p><p>Key concepts: intention, legality, and the hacker mindset.</p>" },
+    { title: "2. Testing Approaches & Security Teams", badge: "Foundation", content: "<p><strong>White Box, Black Box, Grey Box testing</strong> – full knowledge vs no knowledge vs partial. Red Team (offensive), Blue Team (defensive), Purple Team (collaboration). Understand the roles in a security assessment.</p>" },
+    { title: "3. Installing Kali Linux", badge: "Setup", content: "<p>Download Kali from kali.org, set up on VirtualBox (prebuilt VM). Default credentials: kali/kali. First boot, desktop environment overview and essential tools.</p>" },
+    { title: "4. Kali Linux & Terminal Basics", badge: "Setup", content: "<p>Why terminal is powerful: <code>cd, ls, sudo su, clear</code>. Overview of Kali’s categories: information gathering, exploitation, post‑exploitation, password attacks, etc. Linux fluency is critical for hacking.</p>" },
+    { title: "5. Ethical Hacking Methodology (5 Steps)", badge: "Core", content: "<p><strong>1. Reconnaissance</strong> (footprinting)<br><strong>2. Scanning</strong><br><strong>3. Gaining Access</strong><br><strong>4. Maintaining Access</strong><br><strong>5. Clearing Tracks</strong><br>Real‑world analogy with a thief breaking into a building.</p>" },
+    { title: "6. Cyber Kill Chain (7 Steps)", badge: "Core", content: "<p>Military inspired: Reconnaissance → Weaponization → Delivery → Exploitation → Installation → Command & Control → Actions on Objectives. Detailed mapping to real attacks.</p>" },
+    { title: "7. Reconnaissance: Passive vs Active", badge: "Recon", content: "<p><strong>Passive</strong> – no direct interaction (Google, social media, public records). <strong>Active</strong> – direct probes (port scanning, DNS queries). Differences in risk, accuracy, and resource intensity.</p>" },
+    { title: "8. Google Hacking (Google Dorks)", badge: "Recon", content: "<p>Advanced search operators: <code>site:, filetype:, intitle:, inurl:, intext:</code>. Finding sensitive files, credentials, directory listings. Google Hacking Database (GHDB).</p>" },
+    { title: "9. Whois & DNS Reconnaissance", badge: "Recon", content: "<p><strong>Whois records</strong> – domain owner, registrar, expiry. Tools: <code>whois</code> (CLI) or web services. <strong>DNS records:</strong> A, AAAA, CNAME, NS, MX, TXT. Use <code>host, nslookup, dig</code>.</p>" },
+    { title: "10. Social Media Reconnaissance", badge: "Recon", content: "<p>LinkedIn, Twitter, Instagram, YouTube to gather employee info, internal tools, ID cards, and new hires. Google dork for profiles: <code>site:linkedin.com \"working at microsoft.com\"</code>. Username enumeration with <code>sherlock</code>.</p>" },
+    { title: "11. Website Backend Technology", badge: "Recon", content: "<p>Identify CMS, frameworks, libraries, and versions using <strong>Wappalyzer</strong> (browser extension), <strong>BuiltWith</strong>, and <strong>wapp</strong> (command line). Critical for finding version‑specific exploits.</p>" },
+    { title: "12. Subdomain Enumeration", badge: "Recon", content: "<p>Subdomains reveal hidden services (e.g., <code>admin.example.com</code>). Tools: <code>subfinder</code>, online subdomain finders. Often more vulnerable than main domain.</p>" },
+    { title: "13. Firewall Identification (WAF)", badge: "Recon", content: "<p>Detect Web Application Firewalls with <code>wafw00f</code>. Knowing the WAF helps craft bypass techniques during exploitation.</p>" },
+    { title: "14. Port Scanning & NMAP", badge: "Scanning", content: "<p>Ports = doors to services (22: SSH, 80: HTTP, 443: HTTPS). NMAP flags: <code>-sS</code> (stealth SYN), <code>-sV</code> (version), <code>-sC</code> (scripts), <code>-O</code> (OS detection), <code>-A</code> (aggressive).</p>" },
+    { title: "15. Directory Brute Forcing", badge: "Scanning", content: "<p>Discover hidden directories/files using wordlists. Tools: <code>gobuster</code>, <code>feroxbuster</code>. Example: <code>gobuster dir -u http://target.com -w /usr/share/wordlists/dirb/common.txt</code>.</p>" },
+    { title: "16. Vulnerability Scanning with Nessus", badge: "Scanning", content: "<p>Nessus Essentials (free) – automated vulnerability scanner. Installation, configuration, interpreting results (critical/high/medium). Learn to prioritize remediation.</p>" },
+    { title: "17. Finding Public Exploits", badge: "Exploitation", content: "<p>Use <strong>Rapid7 DB</strong>, <strong>Exploit‑DB</strong>, <strong>GitHub</strong>. Offline: <code>searchsploit</code>. Always verify exploit code before running to avoid damage.</p>" },
+    { title: "18. Reverse Shell vs Bind Shell", badge: "Exploitation", content: "<p><strong>Bind shell</strong> – attacker connects to target’s open port. <strong>Reverse shell</strong> – target connects back to attacker (bypasses firewalls). Staged vs stageless payloads (size, evasion).</p>" },
+    { title: "19. Metasploit Framework Basics", badge: "Exploitation", content: "<p><code>msfconsole</code> – exploit, auxiliary, post, payload modules. Commands: <code>search, use, info, set, run</code>. Understand module hierarchy.</p>" },
+    { title: "20. Metasploit in Action", badge: "Exploitation", content: "<p>Server‑side exploit: VSFTPD 2.3.4 backdoor → root shell. Client‑side: generate malicious payload with <code>msfvenom</code>, multi‑handler listener, deliver to victim.</p>" },
+    { title: "21. Online Password Attacks (Hydra)", badge: "Exploitation", content: "<p>Brute‑forcing SSH, HTTP login forms, FTP. Syntax: <code>hydra -l user -P wordlist.txt target ssh</code>. Use <code>-L</code> for user list, <code>-p</code> for single password.</p>" },
+    { title: "22. SQL Injection", badge: "Web Attacks", content: "<p>Inject malicious SQL queries to bypass login, dump databases. Payload: <code>' OR 1=1 --</code>. Types: error‑based, blind, union. Automate with <code>sqlmap</code>.</p>" },
+    { title: "23. Cross‑Site Scripting (XSS)", badge: "Web Attacks", content: "<p>Inject JavaScript into web pages. Reflected, stored, DOM‑based. Simple proof: <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code>. Steal cookies with <code>document.cookie</code>.</p>" },
+    { title: "24. Post‑Exploitation: Mimikatz", badge: "Post‑Exp", content: "<p>Dump NTLM hashes from memory (Windows). Commands: <code>privilege::debug</code>, <code>lsadump::sam</code>. Pass‑the‑hash for lateral movement.</p>" },
+    { title: "25. Offline Password Cracking", badge: "Post‑Exp", content: "<p>Hash identification (<code>hash-identifier</code>). Cracking with <code>hashcat</code> and <code>john</code> (John the Ripper). Cracking ZIP archives, SSH keys, Keepass databases (<code>zip2john, ssh2john, keepass2john</code>).</p>" },
+    { title: "26. Clearing Tracks & Logs", badge: "Post‑Exp", content: "<p>Windows: clear event logs, disable auditpol. Linux: clear bash history (<code>history -c</code>, <code>unset HISTFILE</code>), shred files (<code>shred -z -u file</code>).</p>" },
+    { title: "27. Persistence (Metasploit)", badge: "Post‑Exp", content: "<p>Use <code>exploit/windows/local/persistence</code> to create a backdoor that survives reboots. Set startup as SYSTEM to regain access.</p>" },
+    { title: "28. Anonymity: Proxies, VPN, Tor", badge: "Anonymity", content: "<p>Forward proxy vs reverse proxy. VPN (encrypted tunnel, logging risks). Tor (onion routing, multi‑layer encryption). ProxyChains for chaining proxies. MAC changer (<code>macchanger</code>).</p>" },
+    { title: "29. Port Forwarding", badge: "Advanced", content: "<p>Expose local services to internet using <code>ngrok</code> or <code>portmap.io</code>. Essential for receiving reverse shells over the internet and testing external phishing pages.</p>" },
+    { title: "30. Social Engineering", badge: "Social Eng", content: "<p>Manipulating humans: authority, intimidation, scarcity, urgency, trust, greed. Phases: research → target selection → relationship → exploit. Types: vishing, smishing, impersonation, dumpster diving, etc.</p>" },
+    { title: "31. Instagram Phishing Attack", badge: "Social Eng", content: "<p>Tools: <code>zphisher</code>, <code>maxphisher</code>. Create fake Instagram login pages, harvest credentials, handle 2FA with OTP pages. Social engineering pretext (e.g., verification badge).</p>" },
+    { title: "32. OS Login Phishing", badge: "Social Eng", content: "<p><code>thief_recon</code> and <code>FakeLogonScreen</code> – realistic Windows login screens that capture passwords only when correct. Useful after initial access to escalate privileges.</p>" },
+    { title: "33. Final CTF Walkthrough (TryHackMe)", badge: "Practical", content: "<p>Full machine compromise: NMAP scan → directory brute‑forcing → file upload (extension bypass .phtml) → PHP reverse shell → user flag → SUID binary (systemctl) → read /etc/shadow or root flag. Demonstrates entire pentest cycle.</p>" }
+  ];
+
+  // helper to load/save progress
+  function loadProgress() {
+    const saved = localStorage.getItem('courseProgress_hacking');
+    if (saved) {
+      return JSON.parse(saved);
+    } else {
+      return new Array(modulesData.length).fill(false);
+    }
+  }
+
+  let progress = loadProgress();
+
+  function updateProgressUI() {
+    const completed = progress.filter(v => v === true).length;
+    const percent = Math.round((completed / progress.length) * 100);
+    document.getElementById('progressFill').style.width = percent + '%';
+    document.getElementById('progressPercent').innerText = percent + '% complete';
+    localStorage.setItem('courseProgress_hacking', JSON.stringify(progress));
+  }
+
+  // render modules
+  function renderModules() {
+    const container = document.getElementById('modulesContainer');
+    container.innerHTML = '';
+    modulesData.forEach((mod, idx) => {
+      const card = document.createElement('div');
+      card.className = 'module-card';
+      const isChecked = progress[idx] === true;
+      const header = document.createElement('div');
+      header.className = 'module-header';
+      header.setAttribute('data-idx', idx);
+      const titleDiv = document.createElement('div');
+      titleDiv.className = 'module-title';
+      const checkBox = document.createElement('input');
+      checkBox.type = 'checkbox';
+      checkBox.className = 'checkbox-complete';
+      checkBox.checked = isChecked;
+      checkBox.addEventListener('change', (e) => {
+        e.stopPropagation();
+        progress[idx] = checkBox.checked;
+        updateProgressUI();
+      });
+      const heading = document.createElement('h2');
+      heading.innerText = mod.title;
+      const badgeSpan = document.createElement('span');
+      badgeSpan.className = 'module-badge';
+      badgeSpan.innerText = mod.badge;
+      titleDiv.appendChild(checkBox);
+      titleDiv.appendChild(heading);
+      titleDiv.appendChild(badgeSpan);
+      const toggleSpan = document.createElement('span');
+      toggleSpan.className = 'toggle-icon';
+      toggleSpan.innerText = '▼';
+      header.appendChild(titleDiv);
+      header.appendChild(toggleSpan);
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'module-content';
+      contentDiv.innerHTML = mod.content;
+      card.appendChild(header);
+      card.appendChild(contentDiv);
+      // expand/collapse logic
+      header.addEventListener('click', (e) => {
+        if (e.target.type !== 'checkbox') {
+          contentDiv.classList.toggle('open');
+          toggleSpan.innerText = contentDiv.classList.contains('open') ? '▲' : '▼';
+        }
+      });
+      container.appendChild(card);
+    });
+  }
+
+  // reset progress
+  function resetProgress() {
+    if (confirm('Reset all module progress? This cannot be undone.')) {
+      progress.fill(false);
+      updateProgressUI();
+      // re-render to update checkboxes
+      renderModules();
+    }
+  }
+
+  // init page
+  renderModules();
+  updateProgressUI();
+  document.getElementById('resetProgressBtn').addEventListener('click', resetProgress);
+</script>
+</body>
+</html>
