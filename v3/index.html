@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethical Hacking Mastery • Complete Professional Course</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        :root { --tw-color-primary: #10b981; }
+        * { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+        .header-font { font-family: 'Space Grotesk', sans-serif; }
+        .module-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .module-card:hover { transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgb(16 185 129 / 0.1), 0 8px 10px -6px rgb(16 185 129 / 0.1); }
+        .progress-bar { animation: progress 1s ease-in-out forwards; }
+        .quiz-option:hover { background-color: #052e16; }
+        .section-header { background: linear-gradient(90deg, #052e16, #064e3b); }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200 min-h-screen">
+
+    <!-- STORAGE WARNING BANNER -->
+    <div id="storage-warning" class="hidden bg-amber-500/10 border-b border-amber-400 text-amber-400 text-xs px-8 py-3 flex items-center justify-center gap-x-3">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>Progress cannot be saved permanently (sandboxed environment). Progress will reset when you close or refresh the page.</span>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="bg-black border-b border-emerald-500/30 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center text-white font-bold text-xl">EH</div>
+                <h1 class="header-font text-3xl tracking-tighter text-white">Ethical Hacking Mastery</h1>
+                <span class="px-3 py-0.5 text-xs font-medium bg-emerald-500/10 text-emerald-400 rounded-3xl border border-emerald-500/30">Professional Path</span>
+            </div>
+            <div class="flex items-center gap-x-8">
+                <div class="flex items-center gap-x-4">
+                    <div class="text-sm font-medium text-zinc-400">Course Progress</div>
+                    <div class="w-64 bg-zinc-900 rounded-3xl h-3 overflow-hidden">
+                        <div id="overall-progress-bar" class="progress-bar h-3 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-3xl" style="width: 0%"></div>
+                    </div>
+                    <span id="overall-progress-text" class="font-mono text-sm font-semibold text-emerald-400">0%</span>
+                </div>
+                <button onclick="resetProgress()" class="flex items-center gap-x-2 px-6 h-10 text-sm font-medium border border-zinc-700 hover:border-red-500/50 hover:text-red-400 rounded-3xl">
+                    <i class="fa-solid fa-rotate-right"></i> Reset Progress
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-screen-2xl mx-auto flex">
+        <!-- SIDEBAR -->
+        <div class="w-72 bg-zinc-900 border-r border-emerald-500/10 h-[calc(100vh-73px)] overflow-auto p-6">
+            <div class="mb-8">
+                <h2 class="uppercase text-xs tracking-[1px] font-medium text-emerald-400 mb-3 flex items-center gap-x-2"><i class="fa-solid fa-book"></i> LEARNING PATH</h2>
+                <div id="sidebar-modules" class="space-y-1"></div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="flex-1 p-8 overflow-auto" style="height: calc(100vh - 73px);">
+            <div id="welcome-screen">
+                <div class="max-w-3xl">
+                    <h1 class="header-font text-6xl leading-none tracking-tighter text-white mb-4">Master Ethical Hacking.<br>From Zero to Professional.</h1>
+                    <button onclick="startCourse()" class="mt-10 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-8 h-14 rounded-3xl text-lg">
+                        <i class="fa-solid fa-play mr-3"></i> BEGIN COURSE
+                    </button>
+                </div>
+            </div>
+
+            <div id="course-content" class="hidden">
+                <div id="modules-container" class="space-y-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUIZ MODAL -->
+    <div id="quiz-modal" onclick="if(event.target===this) hideQuiz()" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center">
+        <div onclick="event.stopImmediatePropagation()" class="bg-zinc-900 w-full max-w-2xl mx-4 rounded-3xl overflow-hidden">
+            <div class="px-8 py-6 border-b border-zinc-700 flex justify-between items-center">
+                <h3 id="modal-quiz-title" class="font-semibold text-xl"></h3>
+                <div onclick="hideQuiz()" class="cursor-pointer text-zinc-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></div>
+            </div>
+            <div id="quiz-content" class="p-8"></div>
+            <div class="px-8 py-6 border-t border-zinc-700 flex justify-end">
+                <button onclick="hideQuiz()" class="px-8 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-3xl font-medium">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Safe storage wrapper (prevents SecurityError in sandboxed environments)
+        let safeStorage = {};
+        let storageEnabled = false;
+        try {
+            if (window.localStorage) {
+                safeStorage = window.localStorage;
+                storageEnabled = true;
+                document.getElementById('storage-warning').classList.add('hidden');
+            }
+        } catch (e) {
+            // Fallback to in-memory object
+            safeStorage = {};
+            storageEnabled = false;
+            document.getElementById('storage-warning').classList.remove('hidden');
+        }
+
+        // Tailwind initialization
+        (function() {
+            const config = { theme: { extend: { colors: { primary: '#10b981' } } } };
+            if (typeof window.tailwindConfig === 'undefined') window.tailwindConfig = config;
+        })();
+
+        // Course modules (representative set – full structure)
+        const courseModules = [
+            {id:1, number:"Module 1", title:"Introduction to Ethical Hacking", group:"Introduction", theory:"What is hacking? Ethical hacking definition. Types: White, Black, Grey Hat, etc.", practice:"List three real-world ethical hacking examples.", metacognition:"How has this changed your view of hacking?", creative:"Create a mind map of hacker types.", quiz:[{type:"mcq",question:"Ethical hacker type?",options:["Black Hat","White Hat","Script Kiddie"],correct:1}]},
+            {id:2, number:"Module 2", title:"Testing Approaches & Security Teams", group:"Introduction", theory:"White Box, Black Box, Grey Box. Red, Blue, Purple Teams.", practice:"Draw comparison table.", metacognition:"Which approach is best for enterprises?", creative:"Write a Purple Team job posting.", quiz:[{type:"mcq",question:"Grey Box gives:",options:["Zero","Full","Partial"],correct:2}]},
+            {id:3, number:"Module 3", title:"Installing Kali Linux", group:"Kali Basics", theory:"Download from kali.org. VirtualBox installation. Default credentials: kali/kali.", practice:"Install Kali in VirtualBox and screenshot the desktop.", metacognition:"What challenges did you face during installation?", creative:"Record a 60-second walkthrough video.", quiz:[{type:"mcq",question:"Default username/password?",options:["root/toor","kali/kali","admin/admin"],correct:1}]},
+            {id:4, number:"Module 4", title:"Kali Linux Basics & Terminal", group:"Kali Basics", theory:"Commands: cd, ls, sudo su. Why terminal is essential.", practice:"Practice basic commands in terminal.", metacognition:"How does terminal increase efficiency?", creative:"Create a terminal cheat-sheet PDF.", quiz:[{type:"mcq",question:"Command to become root?",options:["su","sudo su","root"],correct:1}]},
+            {id:5, number:"Module 5", title:"Ethical Hacking Methodology (5 Steps)", group:"Methodology", theory:"1. Recon 2. Scanning 3. Gaining Access 4. Maintaining Access 5. Clearing Tracks.", practice:"Map the 5 phases to a fictional bank breach.", metacognition:"Which phase is most critical?", creative:"Design a 5-step infographic.", quiz:[{type:"mcq",question:"Final step?",options:["Gaining Access","Scanning","Clearing Tracks"],correct:2}]},
+            {id:6, number:"Module 6", title:"Cyber Kill Chain (7 Steps)", group:"Methodology", theory:"1. Recon 2. Weaponization 3. Delivery 4. Exploitation 5. Installation 6. C2 7. Actions on Objectives.", practice:"Map a recent ransomware attack to the Kill Chain.", metacognition:"How does Kill Chain complement the 5-step methodology?", creative:"Create a timeline diagram.", quiz:[{type:"mcq",question:"C2 stands for?",options:["Command & Control","Clear & Cover","Code & Compile"],correct:0}]}
+        ];
+
+        function getStorageKey(id) {
+            return `module_${id}_complete`;
+        }
+
+        function isModuleComplete(id) {
+            try {
+                return safeStorage[getStorageKey(id)] === 'true';
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function setModuleComplete(id, completed) {
+            try {
+                safeStorage[getStorageKey(id)] = completed.toString();
+            } catch (e) {
+                // In-memory fallback (already handled by safeStorage object)
+            }
+        }
+
+        function renderSidebar() {
+            const container = document.getElementById('sidebar-modules');
+            container.innerHTML = '';
+            const groups = {};
+            courseModules.forEach(mod => {
+                if (!groups[mod.group]) groups[mod.group] = [];
+                groups[mod.group].push(mod);
+            });
+            Object.keys(groups).forEach(group => {
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'mb-6';
+                groupDiv.innerHTML = `<div class="text-emerald-400 uppercase text-xs mb-2 tracking-widest font-medium">${group}</div>`;
+                groups[group].forEach(mod => {
+                    const completed = isModuleComplete(mod.id);
+                    const li = document.createElement('div');
+                    li.className = `flex items-center gap-x-3 px-4 py-3 rounded-2xl cursor-pointer module-card ${completed ? 'bg-emerald-500/10' : 'hover:bg-zinc-800'}`;
+                    li.innerHTML = `<input type="checkbox" ${completed ? 'checked' : ''} class="w-5 h-5 accent-emerald-500" onchange="toggleComplete(${mod.id}, this.checked)">
+                                    <div onclick="navigateToModule(${mod.id}); event.stopImmediatePropagation()" class="flex-1"><span class="font-medium">${mod.number}</span> ${mod.title}</div>`;
+                    groupDiv.appendChild(li);
+                });
+                container.appendChild(groupDiv);
+            });
+        }
+
+        function toggleComplete(id, completed) {
+            setModuleComplete(id, completed);
+            updateOverallProgress();
+            renderSidebar();
+        }
+
+        function updateOverallProgress() {
+            let completedCount = 0;
+            courseModules.forEach(mod => {
+                if (isModuleComplete(mod.id)) completedCount++;
+            });
+            const percentage = Math.round((completedCount / courseModules.length) * 100);
+            document.getElementById('overall-progress-bar').style.width = `${percentage}%`;
+            document.getElementById('overall-progress-text').textContent = `${percentage}%`;
+        }
+
+        function renderModules() {
+            const container = document.getElementById('modules-container');
+            container.innerHTML = '';
+            courseModules.forEach(mod => {
+                const completed = isModuleComplete(mod.id);
+                const moduleHTML = `
+                <div id="module-${mod.id}" class="module-card bg-zinc-900 border border-emerald-500/10 rounded-3xl overflow-hidden">
+                    <div class="section-header px-8 py-5 flex items-center justify-between">
+                        <div class="flex items-center gap-x-4">
+                            <span class="font-mono text-emerald-400 bg-black/30 px-4 h-8 rounded-2xl flex items-center text-sm">${mod.number}</span>
+                            <h3 class="text-2xl font-semibold text-white">${mod.title}</h3>
+                        </div>
+                        <span onclick="markCompleteFromModule(${mod.id})" class="cursor-pointer flex items-center text-sm font-medium ${completed ? 'text-emerald-400' : 'text-zinc-400 hover:text-emerald-400'}">
+                            <i class="fa-solid ${completed ? 'fa-circle-check' : 'fa-circle'} mr-1"></i> ${completed ? 'Completed' : 'Mark Complete'}
+                        </span>
+                    </div>
+                    <div class="hidden px-8 pb-8">
+                        <div class="prose prose-invert text-zinc-300">${mod.theory}</div>
+                        <div class="mt-8">
+                            <h4 class="uppercase text-emerald-400 text-xs mb-3">Practice Session</h4>
+                            <div class="bg-black/40 border border-emerald-500/30 rounded-2xl p-6">${mod.practice}</div>
+                        </div>
+                        <button onclick="launchQuiz(${mod.id})" class="mt-8 text-sm flex items-center bg-emerald-500 hover:bg-emerald-600 text-black px-6 h-9 rounded-3xl font-semibold">
+                            <i class="fa-solid fa-question-circle mr-2"></i> TAKE ASSESSMENT
+                        </button>
+                    </div>
+                </div>`;
+                container.innerHTML += moduleHTML;
+            });
+        }
+
+        function launchQuiz(moduleId) {
+            const mod = courseModules.find(m => m.id === moduleId);
+            if (!mod) return;
+            document.getElementById('modal-quiz-title').innerHTML = `${mod.number} – ${mod.title}`;
+            let html = `<div class="space-y-8">`;
+            mod.quiz.forEach((q, i) => {
+                html += `<div><p class="font-medium mb-4">${i+1}. ${q.question}</p>`;
+                q.options.forEach((opt, idx) => {
+                    html += `<label class="quiz-option flex items-center gap-x-3 bg-zinc-800 rounded-2xl px-6 py-4 cursor-pointer"><input type="radio" name="q${i}" value="${idx}"><span>${opt}</span></label>`;
+                });
+                html += `</div>`;
+            });
+            html += `</div>`;
+            document.getElementById('quiz-content').innerHTML = html;
+            document.getElementById('quiz-modal').classList.remove('hidden');
+        }
+
+        function hideQuiz() {
+            document.getElementById('quiz-modal').classList.add('hidden');
+        }
+
+        function startCourse() {
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('course-content').classList.remove('hidden');
+        }
+
+        function markCompleteFromModule(id) {
+            const completed = !isModuleComplete(id);
+            setModuleComplete(id, completed);
+            updateOverallProgress();
+            renderSidebar();
+        }
+
+        function resetProgress() {
+            if (confirm("Reset all progress?")) {
+                courseModules.forEach(mod => {
+                    try { delete safeStorage[getStorageKey(mod.id)]; } catch(e) {}
+                });
+                updateOverallProgress();
+                renderSidebar();
+            }
+        }
+
+        function navigateToModule(id) {
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('course-content').classList.remove('hidden');
+            const el = document.getElementById(`module-${id}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize
+        window.onload = function() {
+            renderSidebar();
+            renderModules();
+            updateOverallProgress();
+            console.log('%c✅ Ethical Hacking Mastery – Loaded successfully (sandbox-safe)', 'color:#10b981; font-weight:600');
+        };
+    </script>
+</body>
+</html>
