@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Kurukshetra Healthcare Directory | Clinics & Nursing Homes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f4f7fc;
+            color: #1a2c3e;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* header section */
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #1f6e8c, #0e4b64);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #2c5a6e;
+            margin-top: 0.5rem;
+            border-top: 2px solid #cbdbe2;
+            display: inline-block;
+            padding-top: 0.5rem;
+        }
+
+        .stats-badge {
+            background: #e6f4f1;
+            display: inline-block;
+            margin-top: 0.75rem;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1f6e8c;
+        }
+
+        /* grid layout */
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        /* card style */
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e2edf2;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
+            border-color: #bfd9e2;
+        }
+
+        .card-header {
+            padding: 1.2rem 1.5rem 0.6rem 1.5rem;
+            border-bottom: 2px solid #eef3f7;
+        }
+
+        .business-name {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #0f4c5f;
+            letter-spacing: -0.2px;
+            line-height: 1.3;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: #d9eef5;
+            color: #0f5c72;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            margin-top: 0.6rem;
+        }
+
+        .card-body {
+            padding: 1.2rem 1.5rem;
+            flex: 1;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            margin-bottom: 0.9rem;
+            font-size: 0.9rem;
+        }
+
+        .info-icon {
+            min-width: 24px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .info-text {
+            color: #2c4a5e;
+            word-break: break-word;
+        }
+
+        .info-text strong {
+            color: #103c4b;
+            font-weight: 600;
+        }
+
+        .contact-highlight {
+            background: #f0f9fe;
+            padding: 0.6rem 0.8rem;
+            border-radius: 14px;
+            margin: 0.5rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            border: 1px solid #cde3ec;
+        }
+
+        .remark {
+            background: #fef6e0;
+            border-left: 4px solid #e6b12e;
+            padding: 0.6rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 0.8rem;
+            color: #7a6300;
+        }
+
+        .no-contact {
+            opacity: 0.75;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: none;
+            border-top: 1px solid #e2edf2;
+        }
+
+        .footer {
+            margin-top: 3.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #597a8b;
+            border-top: 1px solid #cde0e8;
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 1rem;
+            }
+            .business-grid {
+                gap: 1.2rem;
+            }
+            .business-name {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🏥 Kurukshetra Healthcare Directory</h1>
+        <p>Verified clinics, nursing homes & maternity centres • Digital footprint analysis</p>
+        <div class="stats-badge">📋 8 local providers • No website / offline-first</div>
+    </div>
+
+    <div class="business-grid">
+        <!-- 1. Sunita Nursing Home -->
+        <div class="card">
+            <div class="card-header">
+                <div class="business-name">Sunita Nursing Home</div>
+                <span class="category-badge">🏨 Nursing Home</span>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text"><strong>Area</strong><br>Kurukshetra, Haryana</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📞</div>
+                    <div class="info-text"><strong>Contact</strong><br><span class="contact-highlight">9813838072</span></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📝</div>
+                    <div class="info-text"><strong>Key observation</strong><br>Ayushman Bharat empaneled hospital; ideal for digital trust signals.</div>
+                </div>
+                <div class="remark">🔍 No website found · Directory listing available</div>
+            </div>
+        </div>
+
+        <!-- 2. Sobti Nursing Home -->
+        <div class="card">
+            <div class="card-header">
+                <div class="business-name">Sobti Nursing Home</div>
+                <span class="category-badge">🏨 Nursing Home</span>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text"><strong>Area</strong><br>Kurukshetra, Haryana</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📞</div>
+                    <div class="info-text"><strong>Contact</strong><br><span class="contact-highlight">01744-270250</span></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">🌐</div>
+                    <div class="info-text"><strong>Digital asset</strong><br>Has live domain <strong>sobtinursinghome.com</strong> but site likely non-functional.</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">👁️</div>
+                    <div class="info-text"><strong>Specialty</strong><br>Eye care digital presence opportunity.</div>
+                </div>
+                <div class="remark">⚡ Revitalization project: domain exists — ready for rebuild.</div>
+            </div>
+        </div>
+
+        <!-- 3. Aggarwal Nursing Home -->
+        <div class="card">
+            <div class="card-header">
+                <div class="business-name">Aggarwal Nursing Home</div>
+                <span class="category-badge">🏨 Nursing Home</span>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text"><strong>Area</strong><br>Kurukshetra, Haryana</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📞</div>
+                    <div class="info-text"><strong>Contact</strong><br><span class="contact-highlight">01744-290355</span></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📅</div>
+                    <div class="info-text"><strong>Established</strong><br>Since <strong>1973</strong> — strong legacy to leverage digitally.</div>
+                </div>
+                <div class="remark">🏛️ Rich history, zero web presence — ideal for legacy & trust website proposal.</div>
+            </div>
+        </div>
+
+        <!-- 4. Sethi Nursing Home -->
+        <div class="card">
+            <div class="card-header">
+                <div class="business-name">Sethi Nursing Home</div>
+                <span class="category-badge">🏨 Nursing Home</span>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text"><strong>Address / Locality</strong><br>Red Road, Near Neelam Cinema, Jyoti Nagar, Thanesar, Kurukshetra</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📞</div>
+                    <div class="info-text"><strong>Contact</strong><br><span class="contact-highlight">09416087003</span></div>
+                </div>
+                <div class="remark">📍 Prime location with no official digital footprint.</div>
+            </div>
+        </div>
+
+        <!-- 5. Bandlas Nursing Home -->
+        <div class="card">
+            <div class="card-header">
+                <div class="business-name">Bandlas Nursing Home</div>
+                <span class="category-badge">🏨 Nursing Home</span>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text"><strong>Location</strong><br>Near Bank of Baroda, Pehowa, Ambala Road, Kurukshetra</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📞</div>
+                    <div class="info-text"><strong>Contact</strong><br><span class="no-contact">❌ Contact number not found in public directories</span></div>
+                </div>
+                <div class="remark">📢 Minimal online presence – opportunity to claim digital visibility.</div>
+            </div>
+        </div>
+
+        <!-- 6. Akshat Nursing & Maternity Home -->
+        <div class="card">
+            <div class="card-header">
+                <div class="business-name">Akshat Nursing & Maternity Home</div>
+                <span class="category-badge">🤱 Maternity Home</span>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text"><strong>Area</strong><br>Kurukshetra, Haryana</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📞</div>
+                    <div class="info-text"><strong>Contact</strong><br><span class="no-contact">Not publicly listed</span></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">🍼</div>
+                    <div class="info-text"><strong>Niche</strong><br>Maternity & newborn care — high-intent keyword opportunity.</div>
+                </div>
+                <div class="remark">👶 Excellent target for 'maternity home near me' SEO.</div>
+            </div>
+        </div>
+
+        <!-- 7. KALYAN CLINIC -->
+        <div class="card">
+            <div class="card-header">
+                <div class="business-name">KALYAN CLINIC</div>
+                <span class="category-badge">🏥 Clinic (Eye care)</span>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text"><strong>Area</strong><br>Kurukshetra, Haryana</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📞</div>
+                    <div class="info-text"><strong>Contact</strong><br><span class="no-contact">No phone number found</span></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">👁️</div>
+                    <div class="info-text"><strong>Specialty</strong><br>Eye care clinic, listed on generic directories only.</div>
+                </div>
+                <div class="remark">🔎 Perfect candidate for a simple digital storefront + local SEO.</div>
+            </div>
+        </div>
+
+        <!-- 8. Satya Nursing and Maternity Home -->
+        <div class="card">
+            <div class="card-header">
+                <div class="business-name">Satya Nursing and Maternity Home</div>
+                <span class="category-badge">🤰 Maternity Home</span>
+            </div>
+            <div class="card-body">
+                <div class="info-row">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text"><strong>Area</strong><br>Kurukshetra, Haryana</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">📞</div>
+                    <div class="info-text"><strong>Contact</strong><br><span class="contact-highlight">01744-8708903436</span></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">🩺</div>
+                    <div class="info-text"><strong>Specialization</strong><br>Gynaecology and pregnancy care – high-intent “near me” searches.</div>
+                </div>
+                <div class="remark">📈 Direct patient acquisition potential via website & inquiry form.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>📊 Data sourced from Business Profiles & Digital Footprint Analysis (Kurukshetra, Haryana) • All 8 entities currently lack an official website.<br>
+        🧭 Strategic opportunity: Build trust, capture local traffic, and provide 24/7 digital reception.</p>
+        <p style="margin-top: 0.8rem; font-size: 0.7rem;">📍 For web development targeting: Nursing Homes, Maternity Homes & Clinic proposals ready.</p>
+    </div>
+</div>
+</body>
+</html>
