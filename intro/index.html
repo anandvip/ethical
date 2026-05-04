@@ -3,272 +3,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethical Hacking Mastery • Complete Professional Course</title>
+    <title>The Hacker’s Mindset • Curiosity Becomes Your Career</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
         :root { --tw-color-primary: #10b981; }
-        * { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+        * { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 200ms; }
         .header-font { font-family: 'Space Grotesk', sans-serif; }
-        .module-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .module-card:hover { transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgb(16 185 129 / 0.1), 0 8px 10px -6px rgb(16 185 129 / 0.1); }
-        .progress-bar { animation: progress 1s ease-in-out forwards; }
-        .quiz-option:hover { background-color: #052e16; }
+        .hero-bg { background: linear-gradient(90deg, #052e16, #0a0a0a); }
         .section-header { background: linear-gradient(90deg, #052e16, #064e3b); }
+        .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 25px 50px -12px rgb(16 185 129 / 0.15); }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-200 min-h-screen">
 
-    <!-- STORAGE WARNING BANNER -->
-    <div id="storage-warning" class="hidden bg-amber-500/10 border-b border-amber-400 text-amber-400 text-xs px-8 py-3 flex items-center justify-center gap-x-3">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <span>Progress cannot be saved permanently (sandboxed environment). Progress will reset when you close or refresh the page.</span>
-    </div>
-
     <!-- NAVBAR -->
     <nav class="bg-black border-b border-emerald-500/30 sticky top-0 z-50">
-        <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
+        <div class="max-w-screen-2xl mx-auto px-8 py-6 flex items-center justify-between">
             <div class="flex items-center gap-x-3">
-                <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center text-white font-bold text-xl">EH</div>
-                <h1 class="header-font text-3xl tracking-tighter text-white">Ethical Hacking Mastery</h1>
-                <span class="px-3 py-0.5 text-xs font-medium bg-emerald-500/10 text-emerald-400 rounded-3xl border border-emerald-500/30">Professional Path</span>
+                <div class="w-10 h-10 bg-emerald-500 rounded-3xl flex items-center justify-center text-white font-bold text-2xl shadow-inner">🔓</div>
+                <h1 class="header-font text-4xl tracking-tighter text-white">The Hacker’s Mindset</h1>
             </div>
-            <div class="flex items-center gap-x-8">
-                <div class="flex items-center gap-x-4">
-                    <div class="text-sm font-medium text-zinc-400">Course Progress</div>
-                    <div class="w-64 bg-zinc-900 rounded-3xl h-3 overflow-hidden">
-                        <div id="overall-progress-bar" class="progress-bar h-3 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-3xl" style="width: 0%"></div>
-                    </div>
-                    <span id="overall-progress-text" class="font-mono text-sm font-semibold text-emerald-400">0%</span>
-                </div>
-                <button onclick="resetProgress()" class="flex items-center gap-x-2 px-6 h-10 text-sm font-medium border border-zinc-700 hover:border-red-500/50 hover:text-red-400 rounded-3xl">
-                    <i class="fa-solid fa-rotate-right"></i> Reset Progress
+            <div class="flex items-center gap-x-8 text-sm font-medium">
+                <a href="#what-is-hacking" class="hover:text-emerald-400">What is Hacking?</a>
+                <a href="#ethical-hacking" class="hover:text-emerald-400">Ethical Hacking</a>
+                <a href="#hacker-types" class="hover:text-emerald-400">Hacker Types</a>
+                <a href="#career-options" class="hover:text-emerald-400">Career Paths</a>
+                <a href="#challenge" class="hover:text-emerald-400">Your Challenge</a>
+                <button onclick="document.getElementById('challenge').scrollIntoView({behavior:'smooth'})" 
+                        class="bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-6 py-3 rounded-3xl text-sm flex items-center">
+                    <i class="fa-solid fa-rocket mr-2"></i> START TODAY
                 </button>
             </div>
         </div>
     </nav>
 
-    <div class="max-w-screen-2xl mx-auto flex">
-        <!-- SIDEBAR -->
-        <div class="w-72 bg-zinc-900 border-r border-emerald-500/10 h-[calc(100vh-73px)] overflow-auto p-6">
-            <div class="mb-8">
-                <h2 class="uppercase text-xs tracking-[1px] font-medium text-emerald-400 mb-3 flex items-center gap-x-2"><i class="fa-solid fa-book"></i> LEARNING PATH</h2>
-                <div id="sidebar-modules" class="space-y-1"></div>
-            </div>
-        </div>
-
-        <!-- MAIN CONTENT -->
-        <div class="flex-1 p-8 overflow-auto" style="height: calc(100vh - 73px);">
-            <div id="welcome-screen">
-                <div class="max-w-3xl">
-                    <h1 class="header-font text-6xl leading-none tracking-tighter text-white mb-4">Master Ethical Hacking.<br>From Zero to Professional.</h1>
-                    <button onclick="startCourse()" class="mt-10 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-8 h-14 rounded-3xl text-lg">
-                        <i class="fa-solid fa-play mr-3"></i> BEGIN COURSE
-                    </button>
+    <!-- HERO -->
+    <header class="hero-bg py-24">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7">
+                    <div class="inline-flex items-center gap-x-2 bg-emerald-500/10 text-emerald-400 text-sm font-medium px-5 h-9 rounded-3xl mb-6">
+                        <i class="fa-solid fa-fire"></i> FOR FRESH GRADUATES &amp; STUDENTS
+                    </div>
+                    <h1 class="header-font text-7xl lg:text-8xl leading-none tracking-tighter text-white mb-6">
+                        Curiosity isn’t just a trait.<br>It’s your <span class="text-emerald-400">career</span>.
+                    </h1>
+                    <p class="text-2xl text-zinc-400 max-w-xl">Hacking isn’t about breaking things. It’s about understanding them so deeply that you see what others miss.</p>
+                    <div class="flex items-center gap-x-4 mt-12">
+                        <button onclick="document.getElementById('challenge').scrollIntoView({behavior:'smooth'})" 
+                                class="flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-10 h-16 rounded-3xl text-2xl">
+                            Begin Your Journey
+                        </button>
+                        <a href="#newspaper-hack" class="flex items-center text-zinc-400 hover:text-white text-lg">
+                            Read the story that changes everything <i class="fa-solid fa-arrow-right ml-3"></i>
+                        </a>
+                    </div>
+                    <p class="mt-8 text-zinc-500 text-sm">No experience required • Just curiosity and courage</p>
+                </div>
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="bg-black/60 border border-emerald-500/30 rounded-3xl p-8 max-w-xs text-center">
+                        <i class="fa-solid fa-lightbulb text-8xl text-emerald-400 mb-6"></i>
+                        <p class="text-3xl leading-tight header-font">"Hacking = Curiosity. That’s it."</p>
+                        <p class="text-emerald-400 text-sm mt-6">— The Hacker’s Mindset</p>
+                    </div>
                 </div>
             </div>
-
-            <div id="course-content" class="hidden">
-                <div id="modules-container" class="space-y-8"></div>
-            </div>
         </div>
-    </div>
+    </header>
 
-    <!-- QUIZ MODAL -->
-    <div id="quiz-modal" onclick="if(event.target===this) hideQuiz()" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center">
-        <div onclick="event.stopImmediatePropagation()" class="bg-zinc-900 w-full max-w-2xl mx-4 rounded-3xl overflow-hidden">
-            <div class="px-8 py-6 border-b border-zinc-700 flex justify-between items-center">
-                <h3 id="modal-quiz-title" class="font-semibold text-xl"></h3>
-                <div onclick="hideQuiz()" class="cursor-pointer text-zinc-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></div>
+    <!-- ARTICLE SECTIONS -->
+    <main class="max-w-screen-2xl mx-auto px-8">
+
+        <!-- What Is Hacking? -->
+        <section id="what-is-hacking" class="py-20 border-b border-zinc-800">
+            <h2 class="header-font text-5xl text-white mb-8">What Is Hacking? (It’s Not What Movies Told You)</h2>
+            <div class="prose prose-invert text-xl max-w-3xl">
+                <p>Hacking isn’t magic. It isn’t evil. It isn’t a hoodie in a dark room.</p>
+                <p><strong>Hacking = Curiosity.</strong></p>
+                <p>From the moment humans walked the earth, we were hackers. We looked at a stone and asked: <em>Can I make this sharper?</em> We looked at fire and wondered: <em>Can I cook with this?</em></p>
             </div>
-            <div id="quiz-content" class="p-8"></div>
-            <div class="px-8 py-6 border-t border-zinc-700 flex justify-end">
-                <button onclick="hideQuiz()" class="px-8 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-3xl font-medium">Close</button>
+        </section>
+
+        <!-- Newspaper Hack -->
+        <section id="newspaper-hack" class="py-20 bg-zinc-900 rounded-3xl my-8 px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="header-font text-5xl text-white mb-6">The Newspaper Hack That Changes Everything</h2>
+                    <p class="text-2xl text-zinc-300">A newspaper is supposed to deliver news.<br>But in Mumbai, a street vendor wraps hot samosas in yesterday’s paper.</p>
+                    <p class="mt-8 text-emerald-400 text-3xl leading-none">The news is gone.<br>The paper is now keeping oil from dripping on someone’s hands.</p>
+                    <p class="text-2xl mt-12 text-zinc-300">That is a hack.</p>
+                    <p class="text-xl mt-6">Hacking is making things dance in ways their creators never imagined.</p>
+                </div>
+                <div class="flex justify-center">
+                    <div class="text-8xl bg-gradient-to-br from-amber-300 to-yellow-400 text-black w-72 h-72 rounded-3xl flex items-center justify-center shadow-2xl rotate-12">📰→🥟</div>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
+
+        <!-- Ethical Hacking -->
+        <section id="ethical-hacking" class="py-20">
+            <h2 class="header-font text-5xl text-white mb-8">What Is Ethical Hacking? (Your Superpower with a License)</h2>
+            <p class="text-2xl max-w-3xl">Using that same curiosity — not to steal, not to destroy — but to <strong class="text-emerald-400">protect</strong>.</p>
+            <p class="mt-8 text-xl">An ethical hacker breaks into systems <em>before</em> the bad guys do. They find the cracks and shout: “Here! Fix this before someone else finds it!”</p>
+            <p class="mt-12 text-emerald-400 text-2xl font-medium">Legal. Intentional. Desperately needed.</p>
+        </section>
+
+        <!-- Hacker Types -->
+        <section id="hacker-types" class="py-20">
+            <h2 class="header-font text-5xl text-white mb-12">The Spectrum of Hackers (And Where You Belong)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- White Hat -->
+                <div class="card-hover bg-zinc-900 border border-emerald-500/30 rounded-3xl p-8">
+                    <div class="flex justify-between items-start">
+                        <div><i class="fa-solid fa-shield-halved text-6xl text-emerald-400"></i></div>
+                        <span class="px-4 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-bold rounded-3xl">HERO</span>
+                    </div>
+                    <h3 class="text-3xl header-font mt-6">White Hat Hackers</h3>
+                    <p class="text-zinc-400 mt-3">The heroes. Paid handsomely to break systems with permission and fix them. Companies chase them.</p>
+                    <p class="mt-6 text-emerald-400 text-sm font-medium">This is where you belong.</p>
+                </div>
+                <!-- Black Hat -->
+                <div class="card-hover bg-zinc-900 border border-red-500/20 rounded-3xl p-8">
+                    <div class="flex justify-between items-start">
+                        <div><i class="fa-solid fa-skull text-6xl text-red-400"></i></div>
+                        <span class="px-4 py-1 bg-red-500/10 text-red-400 text-xs font-bold rounded-3xl">VILLAIN</span>
+                    </div>
+                    <h3 class="text-3xl header-font mt-6">Black Hat Hackers</h3>
+                    <p class="text-zinc-400 mt-3">They break laws, steal data, demand ransoms. Their future? Prison or a lifetime of hiding.</p>
+                </div>
+                <!-- Grey Hat -->
+                <div class="card-hover bg-zinc-900 border border-zinc-400/30 rounded-3xl p-8">
+                    <div class="flex justify-between items-start">
+                        <div><i class="fa-solid fa-scale-balanced text-6xl text-zinc-400"></i></div>
+                        <span class="px-4 py-1 bg-zinc-400/10 text-zinc-400 text-xs font-bold rounded-3xl">IN-BETWEEN</span>
+                    </div>
+                    <h3 class="text-3xl header-font mt-6">Grey Hat Hackers</h3>
+                    <p class="text-zinc-400 mt-3">They walk the line — exciting but risky. Find bugs without permission but report them anyway.</p>
+                </div>
+                <!-- Script Kiddie -->
+                <div class="card-hover bg-zinc-900 border border-amber-400/30 rounded-3xl p-8">
+                    <div class="flex justify-between items-start">
+                        <div><i class="fa-solid fa-gamepad text-6xl text-amber-400"></i></div>
+                        <span class="px-4 py-1 bg-amber-400/10 text-amber-400 text-xs font-bold rounded-3xl">BEGINNER</span>
+                    </div>
+                    <h3 class="text-3xl header-font mt-6">Script Kiddies</h3>
+                    <p class="text-zinc-400 mt-3">They press buttons others built. Don’t be one. Become the person who writes the tools.</p>
+                </div>
+                <!-- Hacktivist -->
+                <div class="card-hover bg-zinc-900 border border-blue-400/30 rounded-3xl p-8">
+                    <div class="flex justify-between items-start">
+                        <div><i class="fa-solid fa-fist-raised text-6xl text-blue-400"></i></div>
+                        <span class="px-4 py-1 bg-blue-400/10 text-blue-400 text-xs font-bold rounded-3xl">CAUSE-DRIVEN</span>
+                    </div>
+                    <h3 class="text-3xl header-font mt-6">Hacktivists</h3>
+                    <p class="text-zinc-400 mt-3">They hack for justice. Noble intentions, but illegal methods. Inspiring — yet not always a smart career move.</p>
+                </div>
+                <!-- State-Sponsored -->
+                <div class="card-hover bg-zinc-900 border border-purple-400/30 rounded-3xl p-8">
+                    <div class="flex justify-between items-start">
+                        <div><i class="fa-solid fa-building-columns text-6xl text-purple-400"></i></div>
+                        <span class="px-4 py-1 bg-purple-400/10 text-purple-400 text-xs font-bold rounded-3xl">GOVERNMENT</span>
+                    </div>
+                    <h3 class="text-3xl header-font mt-6">State-Sponsored Hackers</h3>
+                    <p class="text-zinc-400 mt-3">The most sophisticated. Unlimited resources. Secret teams. Extremely skilled — but you can’t list that on a resume.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hands-On -->
+        <section class="py-20 bg-zinc-900 rounded-3xl px-12">
+            <h2 class="header-font text-5xl text-white mb-8">From Classroom to Hands-On: Your First Real Step</h2>
+            <p class="text-2xl max-w-2xl">Your degree taught you theory.<br>The hard truth: <strong>You don’t learn hacking in a classroom. You learn it in a terminal.</strong></p>
+            <div class="mt-12 flex flex-wrap gap-6">
+                <div class="bg-black/60 px-8 py-6 rounded-3xl flex-1 min-w-[300px]">
+                    Install Kali Linux<br>
+                    <span class="text-emerald-400 text-sm">Run your first nmap scan today</span>
+                </div>
+                <div class="bg-black/60 px-8 py-6 rounded-3xl flex-1 min-w-[300px]">
+                    Break into your own lab machine<br>
+                    <span class="text-emerald-400 text-sm">Crash it. Fix it. Repeat.</span>
+                </div>
+                <div class="bg-black/60 px-8 py-6 rounded-3xl flex-1 min-w-[300px]">
+                    TryHackMe • HackTheBox<br>
+                    <span class="text-emerald-400 text-sm">Real vulnerable machines waiting for you</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career Options -->
+        <section id="career-options" class="py-20">
+            <h2 class="header-font text-5xl text-white mb-12">Your Career Options (Wider Than You Think)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="flex gap-x-4 items-start"><i class="fa-solid fa-check text-emerald-400 mt-1"></i><div><strong>Security Analyst</strong><p class="text-zinc-400">Monitor networks and stop attacks in real time</p></div></div>
+                <div class="flex gap-x-4 items-start"><i class="fa-solid fa-check text-emerald-400 mt-1"></i><div><strong>Penetration Tester</strong><p class="text-zinc-400">Get paid to legally hack companies</p></div></div>
+                <div class="flex gap-x-4 items-start"><i class="fa-solid fa-check text-emerald-400 mt-1"></i><div><strong>Bug Bounty Hunter</strong><p class="text-zinc-400">$500 – $50,000 per bug on HackerOne</p></div></div>
+                <div class="flex gap-x-4 items-start"><i class="fa-solid fa-check text-emerald-400 mt-1"></i><div><strong>Red Team Operator</strong><p class="text-zinc-400">Simulate full-scale attacks</p></div></div>
+                <div class="flex gap-x-4 items-start"><i class="fa-solid fa-check text-emerald-400 mt-1"></i><div><strong>Security Consultant</strong><p class="text-zinc-400">Advise businesses on how to stay safe</p></div></div>
+                <div class="flex gap-x-4 items-start"><i class="fa-solid fa-check text-emerald-400 mt-1"></i><div><strong>Incident Responder</strong><p class="text-zinc-400">Be the hero who stops a breach</p></div></div>
+            </div>
+            <p class="mt-12 text-emerald-400 text-xl">You don’t need a fancy degree. Skills speak louder.</p>
+        </section>
+
+        <!-- Build Your Own Company -->
+        <section class="py-20 bg-emerald-500/10 rounded-3xl px-12 border border-emerald-500/30">
+            <h2 class="header-font text-5xl text-white mb-8">Build Your Own Company. Create Jobs.</h2>
+            <p class="text-2xl">Start as a solo penetration tester. Get five clients. Hire two freshers. Train them. Get ten more. Soon you’re creating jobs for others just like you.</p>
+            <p class="mt-12 text-3xl text-emerald-400">"I didn’t get placed. I started a security firm and hired ten people this year."</p>
+            <p class="text-zinc-400 mt-6">— The future you can create</p>
+        </section>
+
+        <!-- The Challenge -->
+        <section id="challenge" class="py-20">
+            <h2 class="header-font text-5xl text-white mb-8">The Challenge (This Is for You)</h2>
+            <p class="text-xl mb-12">You’ve read this far. Something in you is already awake.</p>
+            
+            <div class="space-y-6 max-w-2xl mx-auto">
+                <div onclick="toggleChallenge(1)" id="challenge-1" class="flex items-center gap-x-6 bg-zinc-900 hover:bg-emerald-500/10 rounded-3xl px-8 py-6 cursor-pointer border border-transparent">
+                    <div class="text-3xl font-mono text-emerald-400">01</div>
+                    <div class="flex-1">Tonight — Install VirtualBox and Kali Linux</div>
+                    <i id="icon-1" class="fa-solid fa-circle-check text-3xl text-emerald-400 hidden"></i>
+                </div>
+                <div onclick="toggleChallenge(2)" id="challenge-2" class="flex items-center gap-x-6 bg-zinc-900 hover:bg-emerald-500/10 rounded-3xl px-8 py-6 cursor-pointer border border-transparent">
+                    <div class="text-3xl font-mono text-emerald-400">02</div>
+                    <div class="flex-1">Tomorrow — Run your first nmap scan on your own local network</div>
+                    <i id="icon-2" class="fa-solid fa-circle-check text-3xl text-emerald-400 hidden"></i>
+                </div>
+                <div onclick="toggleChallenge(3)" id="challenge-3" class="flex items-center gap-x-6 bg-zinc-900 hover:bg-emerald-500/10 rounded-3xl px-8 py-6 cursor-pointer border border-transparent">
+                    <div class="text-3xl font-mono text-emerald-400">03</div>
+                    <div class="flex-1">This week — Break into a deliberately vulnerable machine (TryHackMe / HackTheBox)</div>
+                    <i id="icon-3" class="fa-solid fa-circle-check text-3xl text-emerald-400 hidden"></i>
+                </div>
+                <div onclick="toggleChallenge(4)" id="challenge-4" class="flex items-center gap-x-6 bg-zinc-900 hover:bg-emerald-500/10 rounded-3xl px-8 py-6 cursor-pointer border border-transparent">
+                    <div class="text-3xl font-mono text-emerald-400">04</div>
+                    <div class="flex-1">This month — Find your first real bug (with permission)</div>
+                    <i id="icon-4" class="fa-solid fa-circle-check text-3xl text-emerald-400 hidden"></i>
+                </div>
+                <div onclick="toggleChallenge(5)" id="challenge-5" class="flex items-center gap-x-6 bg-zinc-900 hover:bg-emerald-500/10 rounded-3xl px-8 py-6 cursor-pointer border border-transparent">
+                    <div class="text-3xl font-mono text-emerald-400">05</div>
+                    <div class="flex-1">This year — Earn your first dollar from bug bounty or freelance client</div>
+                    <i id="icon-5" class="fa-solid fa-circle-check text-3xl text-emerald-400 hidden"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Words -->
+        <section class="py-24 text-center bg-black rounded-3xl">
+            <p class="text-4xl max-w-4xl mx-auto leading-tight">You are fresh. You have no outdated habits.<br>That is your superpower.</p>
+            <p class="mt-12 text-emerald-400 text-3xl">The industry doesn’t care about your marks.<br>It cares about one question:</p>
+            <p class="text-6xl header-font mt-8">"Can you break it? And can you fix it?"</p>
+            <p class="mt-16 text-zinc-400 text-2xl">If the answer is yes, you will never be unemployed.<br>You will never stop learning.</p>
+            <p class="mt-20 text-3xl text-white">🚀 Now go hack the world — one system at a time.</p>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-black py-12 border-t border-emerald-500/20 text-center text-zinc-500 text-sm">
+        Built to inspire the next generation of ethical hackers.<br>
+        Turn curiosity into a career. The world needs you.
+        <div class="mt-6 text-[10px]">Share this page with a fellow student • Practice ethically • Respect the law</div>
+    </footer>
 
     <script>
-        // Safe storage wrapper (prevents SecurityError in sandboxed environments)
-        let safeStorage = {};
-        let storageEnabled = false;
-        try {
-            if (window.localStorage) {
-                safeStorage = window.localStorage;
-                storageEnabled = true;
-                document.getElementById('storage-warning').classList.add('hidden');
-            }
-        } catch (e) {
-            // Fallback to in-memory object
-            safeStorage = {};
-            storageEnabled = false;
-            document.getElementById('storage-warning').classList.remove('hidden');
-        }
-
         // Tailwind initialization
         (function() {
             const config = { theme: { extend: { colors: { primary: '#10b981' } } } };
             if (typeof window.tailwindConfig === 'undefined') window.tailwindConfig = config;
         })();
 
-        // Course modules (representative set – full structure)
-        const courseModules = [
-            {id:1, number:"Module 1", title:"Introduction to Ethical Hacking", group:"Introduction", theory:"What is hacking? Ethical hacking definition. Types: White, Black, Grey Hat, etc.", practice:"List three real-world ethical hacking examples.", metacognition:"How has this changed your view of hacking?", creative:"Create a mind map of hacker types.", quiz:[{type:"mcq",question:"Ethical hacker type?",options:["Black Hat","White Hat","Script Kiddie"],correct:1}]},
-            {id:2, number:"Module 2", title:"Testing Approaches & Security Teams", group:"Introduction", theory:"White Box, Black Box, Grey Box. Red, Blue, Purple Teams.", practice:"Draw comparison table.", metacognition:"Which approach is best for enterprises?", creative:"Write a Purple Team job posting.", quiz:[{type:"mcq",question:"Grey Box gives:",options:["Zero","Full","Partial"],correct:2}]},
-            {id:3, number:"Module 3", title:"Installing Kali Linux", group:"Kali Basics", theory:"Download from kali.org. VirtualBox installation. Default credentials: kali/kali.", practice:"Install Kali in VirtualBox and screenshot the desktop.", metacognition:"What challenges did you face during installation?", creative:"Record a 60-second walkthrough video.", quiz:[{type:"mcq",question:"Default username/password?",options:["root/toor","kali/kali","admin/admin"],correct:1}]},
-            {id:4, number:"Module 4", title:"Kali Linux Basics & Terminal", group:"Kali Basics", theory:"Commands: cd, ls, sudo su. Why terminal is essential.", practice:"Practice basic commands in terminal.", metacognition:"How does terminal increase efficiency?", creative:"Create a terminal cheat-sheet PDF.", quiz:[{type:"mcq",question:"Command to become root?",options:["su","sudo su","root"],correct:1}]},
-            {id:5, number:"Module 5", title:"Ethical Hacking Methodology (5 Steps)", group:"Methodology", theory:"1. Recon 2. Scanning 3. Gaining Access 4. Maintaining Access 5. Clearing Tracks.", practice:"Map the 5 phases to a fictional bank breach.", metacognition:"Which phase is most critical?", creative:"Design a 5-step infographic.", quiz:[{type:"mcq",question:"Final step?",options:["Gaining Access","Scanning","Clearing Tracks"],correct:2}]},
-            {id:6, number:"Module 6", title:"Cyber Kill Chain (7 Steps)", group:"Methodology", theory:"1. Recon 2. Weaponization 3. Delivery 4. Exploitation 5. Installation 6. C2 7. Actions on Objectives.", practice:"Map a recent ransomware attack to the Kill Chain.", metacognition:"How does Kill Chain complement the 5-step methodology?", creative:"Create a timeline diagram.", quiz:[{type:"mcq",question:"C2 stands for?",options:["Command & Control","Clear & Cover","Code & Compile"],correct:0}]}
-        ];
+        // Safe challenge progress (works in sandboxed or normal environments)
+        let safeStorage = {};
+        try { safeStorage = window.localStorage || {}; } catch(e) { safeStorage = {}; }
 
-        function getStorageKey(id) {
-            return `module_${id}_complete`;
+        function toggleChallenge(n) {
+            const key = `challenge_${n}`;
+            const completed = safeStorage[key] === 'true';
+            safeStorage[key] = (!completed).toString();
+            const icon = document.getElementById(`icon-${n}`);
+            if (icon) icon.classList.toggle('hidden', completed);
         }
 
-        function isModuleComplete(id) {
-            try {
-                return safeStorage[getStorageKey(id)] === 'true';
-            } catch (e) {
-                return false;
-            }
-        }
-
-        function setModuleComplete(id, completed) {
-            try {
-                safeStorage[getStorageKey(id)] = completed.toString();
-            } catch (e) {
-                // In-memory fallback (already handled by safeStorage object)
-            }
-        }
-
-        function renderSidebar() {
-            const container = document.getElementById('sidebar-modules');
-            container.innerHTML = '';
-            const groups = {};
-            courseModules.forEach(mod => {
-                if (!groups[mod.group]) groups[mod.group] = [];
-                groups[mod.group].push(mod);
-            });
-            Object.keys(groups).forEach(group => {
-                const groupDiv = document.createElement('div');
-                groupDiv.className = 'mb-6';
-                groupDiv.innerHTML = `<div class="text-emerald-400 uppercase text-xs mb-2 tracking-widest font-medium">${group}</div>`;
-                groups[group].forEach(mod => {
-                    const completed = isModuleComplete(mod.id);
-                    const li = document.createElement('div');
-                    li.className = `flex items-center gap-x-3 px-4 py-3 rounded-2xl cursor-pointer module-card ${completed ? 'bg-emerald-500/10' : 'hover:bg-zinc-800'}`;
-                    li.innerHTML = `<input type="checkbox" ${completed ? 'checked' : ''} class="w-5 h-5 accent-emerald-500" onchange="toggleComplete(${mod.id}, this.checked)">
-                                    <div onclick="navigateToModule(${mod.id}); event.stopImmediatePropagation()" class="flex-1"><span class="font-medium">${mod.number}</span> ${mod.title}</div>`;
-                    groupDiv.appendChild(li);
-                });
-                container.appendChild(groupDiv);
-            });
-        }
-
-        function toggleComplete(id, completed) {
-            setModuleComplete(id, completed);
-            updateOverallProgress();
-            renderSidebar();
-        }
-
-        function updateOverallProgress() {
-            let completedCount = 0;
-            courseModules.forEach(mod => {
-                if (isModuleComplete(mod.id)) completedCount++;
-            });
-            const percentage = Math.round((completedCount / courseModules.length) * 100);
-            document.getElementById('overall-progress-bar').style.width = `${percentage}%`;
-            document.getElementById('overall-progress-text').textContent = `${percentage}%`;
-        }
-
-        function renderModules() {
-            const container = document.getElementById('modules-container');
-            container.innerHTML = '';
-            courseModules.forEach(mod => {
-                const completed = isModuleComplete(mod.id);
-                const moduleHTML = `
-                <div id="module-${mod.id}" class="module-card bg-zinc-900 border border-emerald-500/10 rounded-3xl overflow-hidden">
-                    <div class="section-header px-8 py-5 flex items-center justify-between">
-                        <div class="flex items-center gap-x-4">
-                            <span class="font-mono text-emerald-400 bg-black/30 px-4 h-8 rounded-2xl flex items-center text-sm">${mod.number}</span>
-                            <h3 class="text-2xl font-semibold text-white">${mod.title}</h3>
-                        </div>
-                        <span onclick="markCompleteFromModule(${mod.id})" class="cursor-pointer flex items-center text-sm font-medium ${completed ? 'text-emerald-400' : 'text-zinc-400 hover:text-emerald-400'}">
-                            <i class="fa-solid ${completed ? 'fa-circle-check' : 'fa-circle'} mr-1"></i> ${completed ? 'Completed' : 'Mark Complete'}
-                        </span>
-                    </div>
-                    <div class="hidden px-8 pb-8">
-                        <div class="prose prose-invert text-zinc-300">${mod.theory}</div>
-                        <div class="mt-8">
-                            <h4 class="uppercase text-emerald-400 text-xs mb-3">Practice Session</h4>
-                            <div class="bg-black/40 border border-emerald-500/30 rounded-2xl p-6">${mod.practice}</div>
-                        </div>
-                        <button onclick="launchQuiz(${mod.id})" class="mt-8 text-sm flex items-center bg-emerald-500 hover:bg-emerald-600 text-black px-6 h-9 rounded-3xl font-semibold">
-                            <i class="fa-solid fa-question-circle mr-2"></i> TAKE ASSESSMENT
-                        </button>
-                    </div>
-                </div>`;
-                container.innerHTML += moduleHTML;
-            });
-        }
-
-        function launchQuiz(moduleId) {
-            const mod = courseModules.find(m => m.id === moduleId);
-            if (!mod) return;
-            document.getElementById('modal-quiz-title').innerHTML = `${mod.number} – ${mod.title}`;
-            let html = `<div class="space-y-8">`;
-            mod.quiz.forEach((q, i) => {
-                html += `<div><p class="font-medium mb-4">${i+1}. ${q.question}</p>`;
-                q.options.forEach((opt, idx) => {
-                    html += `<label class="quiz-option flex items-center gap-x-3 bg-zinc-800 rounded-2xl px-6 py-4 cursor-pointer"><input type="radio" name="q${i}" value="${idx}"><span>${opt}</span></label>`;
-                });
-                html += `</div>`;
-            });
-            html += `</div>`;
-            document.getElementById('quiz-content').innerHTML = html;
-            document.getElementById('quiz-modal').classList.remove('hidden');
-        }
-
-        function hideQuiz() {
-            document.getElementById('quiz-modal').classList.add('hidden');
-        }
-
-        function startCourse() {
-            document.getElementById('welcome-screen').classList.add('hidden');
-            document.getElementById('course-content').classList.remove('hidden');
-        }
-
-        function markCompleteFromModule(id) {
-            const completed = !isModuleComplete(id);
-            setModuleComplete(id, completed);
-            updateOverallProgress();
-            renderSidebar();
-        }
-
-        function resetProgress() {
-            if (confirm("Reset all progress?")) {
-                courseModules.forEach(mod => {
-                    try { delete safeStorage[getStorageKey(mod.id)]; } catch(e) {}
-                });
-                updateOverallProgress();
-                renderSidebar();
-            }
-        }
-
-        function navigateToModule(id) {
-            document.getElementById('welcome-screen').classList.add('hidden');
-            document.getElementById('course-content').classList.remove('hidden');
-            const el = document.getElementById(`module-${id}`);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Initialize
+        // Restore saved progress on load
         window.onload = function() {
-            renderSidebar();
-            renderModules();
-            updateOverallProgress();
-            console.log('%c✅ Ethical Hacking Mastery – Loaded successfully (sandbox-safe)', 'color:#10b981; font-weight:600');
+            for (let i = 1; i <= 5; i++) {
+                if (safeStorage[`challenge_${i}`] === 'true') {
+                    const icon = document.getElementById(`icon-${i}`);
+                    if (icon) icon.classList.remove('hidden');
+                }
+            }
+            console.log('%c✅ The Hacker’s Mindset webpage loaded successfully.', 'color:#10b981; font-weight:600');
         };
     </script>
 </body>
