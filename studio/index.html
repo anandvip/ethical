@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethical Hacking Academy | Skill Synergy & Team Efficacy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap');
+        
+        :root { --emerald-glow: 0 0 20px rgba(16, 185, 129, 0.2); }
+        body { font-family: 'Inter', sans-serif; background-color: #09090b; }
+        .header-font { font-family: 'Space Grotesk', sans-serif; }
+        
+        .role-badge { font-size: 0.65rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; font-weight: 700; }
+        .role-scout { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .role-breacher { background: rgba(248, 113, 113, 0.1); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); }
+        .role-ghost { background: rgba(167, 139, 250, 0.1); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.3); }
+        .role-architect { background: rgba(52, 211, 153, 0.1); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+
+        .efficacy-card { background: linear-gradient(145deg, #18181b, #09090b); border: 1px solid #27272a; }
+        .module-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(255,255,255,0.05); }
+        .module-card:hover { border-color: rgba(16, 185, 129, 0.4); transform: translateX(4px); }
+        
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
+    </style>
+</head>
+<body class="text-zinc-300">
+
+    <!-- TOP NAVIGATION -->
+    <nav class="border-b border-zinc-800 bg-zinc-950/50 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-screen-2xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-x-4">
+                <div class="h-10 w-10 bg-emerald-500 rounded-xl flex items-center justify-center text-black shadow-[0_0_15px_rgba(16,185,129,0.4)]">
+                    <i class="fa-solid fa-user-shield text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="header-font text-xl font-bold text-white tracking-tight">HACKER_ACADEMY <span class="text-emerald-500 text-sm font-mono ml-2">v2.0</span></h1>
+                    <p class="text-[10px] text-zinc-500 uppercase tracking-widest">Collaborative Cyber-Defense Path</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-x-12">
+                <div class="hidden md:flex items-center gap-x-6">
+                    <div class="text-right">
+                        <div class="text-[10px] text-zinc-500 uppercase font-bold">Your Team Efficacy</div>
+                        <div class="flex gap-x-1 mt-1">
+                            <div id="eff-1" class="h-1.5 w-8 rounded-full bg-zinc-800"></div>
+                            <div id="eff-2" class="h-1.5 w-8 rounded-full bg-zinc-800"></div>
+                            <div id="eff-3" class="h-1.5 w-8 rounded-full bg-zinc-800"></div>
+                            <div id="eff-4" class="h-1.5 w-8 rounded-full bg-zinc-800"></div>
+                        </div>
+                    </div>
+                    <div class="h-10 w-[1px] bg-zinc-800"></div>
+                    <div class="flex items-center gap-x-4">
+                        <span id="prog-percent" class="font-mono text-emerald-500 font-bold text-xl">0%</span>
+                        <div class="w-32 bg-zinc-900 h-2 rounded-full overflow-hidden">
+                            <div id="prog-bar" class="bg-emerald-500 h-full transition-all duration-700" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="resetAll()" class="text-xs hover:text-red-400 transition-colors"><i class="fa-solid fa-power-off mr-2"></i>RESET</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-screen-2xl mx-auto flex flex-col lg:flex-row">
+        
+        <!-- LEFT SIDEBAR: PROFILE & ROLES -->
+        <aside class="w-full lg:w-80 p-6 border-r border-zinc-900 bg-zinc-950 h-auto lg:h-[calc(100vh-73px)] overflow-y-auto">
+            <div class="mb-10">
+                <h3 class="text-xs font-bold text-zinc-500 uppercase mb-4 tracking-widest">Operational Roles</h3>
+                <div class="space-y-3">
+                    <div class="p-3 rounded-xl bg-zinc-900/50 border border-zinc-800 flex items-center justify-between group">
+                        <div class="flex items-center gap-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400"><i class="fa-solid fa-tower-observation"></i></div>
+                            <span class="text-sm font-medium">The Scout</span>
+                        </div>
+                        <span id="score-scout" class="text-xs font-mono text-zinc-500">0%</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-zinc-900/50 border border-zinc-800 flex items-center justify-between">
+                        <div class="flex items-center gap-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center text-red-400"><i class="fa-solid fa-fire-extinguisher"></i></div>
+                            <span class="text-sm font-medium">The Breacher</span>
+                        </div>
+                        <span id="score-breacher" class="text-xs font-mono text-zinc-500">0%</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-zinc-900/50 border border-zinc-800 flex items-center justify-between">
+                        <div class="flex items-center gap-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400"><i class="fa-solid fa-ghost"></i></div>
+                            <span class="text-sm font-medium">The Ghost</span>
+                        </div>
+                        <span id="score-ghost" class="text-xs font-mono text-zinc-500">0%</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-zinc-900/50 border border-zinc-800 flex items-center justify-between">
+                        <div class="flex items-center gap-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400"><i class="fa-solid fa-compass-drafting"></i></div>
+                            <span class="text-sm font-medium">The Architect</span>
+                        </div>
+                        <span id="score-architect" class="text-xs font-mono text-zinc-500">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xs font-bold text-zinc-500 uppercase mb-4 tracking-widest">Collaboration Lab</h3>
+                <div class="p-4 rounded-2xl efficacy-card border border-emerald-500/20">
+                    <p class="text-xs leading-relaxed text-zinc-400 italic">"Security is a team sport. Your efficacy score grows as you balance recon, stealth, and defense."</p>
+                    <div class="mt-4 pt-4 border-t border-zinc-800">
+                        <div class="flex justify-between text-[10px] mb-1"><span>Human Connect</span><span class="text-emerald-500">High</span></div>
+                        <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                            <div id="human-bar" class="h-full bg-emerald-500 transition-all duration-1000" style="width: 20%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 overflow-y-auto h-auto lg:h-[calc(100vh-73px)] p-6 lg:p-10">
+            
+            <!-- MINDSET HERO -->
+            <section id="hero" class="max-w-4xl mb-16">
+                <h2 class="header-font text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tighter">Curiosity is your <span class="text-emerald-500">Superpower.</span></h2>
+                <div class="bg-zinc-900/40 p-8 rounded-3xl border border-zinc-800 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-8xl text-emerald-500"><i class="fa-solid fa-quote-right"></i></div>
+                    <p class="text-xl text-zinc-300 leading-relaxed italic mb-6">
+                        "The moment you started hacking was the moment you took control of your own future."
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="px-4 py-2 bg-emerald-500/10 rounded-full border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase">Textbooks to Terminals</div>
+                        <div class="px-4 py-2 bg-zinc-800 rounded-full text-zinc-400 text-xs font-bold uppercase">3.5M Job Vacancies</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MODULE GRID -->
+            <div id="module-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Modules will be injected here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- SKILL TESTING MODAL -->
+    <div id="quiz-modal" class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-zinc-800 w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl">
+            <div class="p-6 border-b border-zinc-800 flex justify-between items-center">
+                <h3 id="quiz-title" class="header-font text-xl font-bold text-white">Skill Verification</h3>
+                <button onclick="closeQuiz()" class="text-zinc-500 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div id="quiz-body" class="p-8 space-y-6">
+                <!-- Quiz content -->
+            </div>
+            <div class="p-6 bg-zinc-950 flex justify-end gap-x-4">
+                <button onclick="closeQuiz()" class="px-6 py-2 text-sm text-zinc-500 font-medium">Cancel</button>
+                <button id="submit-quiz" class="px-8 py-2 bg-emerald-500 text-black rounded-full font-bold text-sm hover:bg-emerald-400 transition-colors shadow-lg">Verify Skills</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const courseData = [
+            { id: 1, role: 'architect', title: 'Security Foundations & Mental Models', desc: 'Understanding White/Black/Grey hats and building the ethical mindset.', skill: 'Ethical Frameworks', team: 'Establish legal boundaries for the team.' },
+            { id: 2, role: 'scout', title: 'Advanced OSINT & Digital Footprinting', desc: 'Google Dorks, Whois, and Social Media Reconnaissance.', skill: 'Intelligence Gathering', team: 'Provide target data to the Breacher.' },
+            { id: 3, role: 'breacher', title: 'Vulnerability Assessment & NMAP', desc: 'Scanning networks and identifying potential entry points.', skill: 'Scanning & Enumeration', team: 'Locate weaknesses in the target infrastructure.' },
+            { id: 4, role: 'breacher', title: 'Exploitation & Payload Delivery', desc: 'Reverse shells, Metasploit, and bypassing initial defenses.', skill: 'Initial Access', team: 'Gain entry and establish a beachhead.' },
+            { id: 5, role: 'ghost', title: 'Stealth, Persistence & Clearing Tracks', desc: 'Maintaining access and removing digital logs/fingerprints.', skill: 'Post-Exploitation', team: 'Ensure the team remains undetected during operations.' },
+            { id: 6, role: 'architect', title: 'Defensive Strategy & Remediation', desc: 'Patching vulnerabilities and setting up WAFs.', skill: 'System Hardening', team: 'Fix discovered bugs to protect the client.' }
+        ];
+
+        let progress = JSON.parse(localStorage.getItem('eh_mastery_prog')) || {};
+
+        function renderModules() {
+            const container = document.getElementById('module-container');
+            container.innerHTML = '';
+
+            courseData.forEach(mod => {
+                const isDone = progress[mod.id];
+                const card = document.createElement('div');
+                card.className = `module-card p-6 rounded-3xl bg-zinc-900/50 ${isDone ? 'border-emerald-500/40 bg-emerald-500/[0.02]' : ''}`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="role-badge role-${mod.role}">${mod.role}</span>
+                        <button onclick="openQuiz(${mod.id})" class="h-8 w-8 rounded-full border border-zinc-700 flex items-center justify-center transition-all ${isDone ? 'bg-emerald-500 border-emerald-500 text-black' : 'hover:border-emerald-500 text-zinc-500'}">
+                            <i class="fa-solid ${isDone ? 'fa-check' : 'fa-play text-[10px]'}"></i>
+                        </button>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-2 leading-tight">${mod.title}</h4>
+                    <p class="text-xs text-zinc-500 mb-4">${mod.desc}</p>
+                    <div class="bg-black/40 rounded-2xl p-4 border border-zinc-800/50">
+                        <div class="flex items-center gap-x-2 mb-2">
+                            <i class="fa-solid fa-users-viewfinder text-emerald-500 text-[10px]"></i>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Team Mission</span>
+                        </div>
+                        <p class="text-[11px] text-zinc-400 leading-relaxed">${mod.team}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            calculateStats();
+        }
+
+        function openQuiz(id) {
+            const mod = courseData.find(m => m.id === id);
+            document.getElementById('quiz-title').innerText = mod.title;
+            document.getElementById('quiz-body').innerHTML = `
+                <div class="space-y-4">
+                    <p class="text-zinc-400 text-sm italic">"Practice session: Apply your knowledge of <strong>${mod.skill}</strong> to complete this validation."</p>
+                    <div class="space-y-3">
+                        <label class="block p-4 rounded-2xl border border-zinc-800 bg-zinc-950 cursor-pointer hover:border-emerald-500/50">
+                            <input type="radio" name="q1" class="mr-3 accent-emerald-500">
+                            <span class="text-sm">Collaborate with the team to identify entry points.</span>
+                        </label>
+                        <label class="block p-4 rounded-2xl border border-zinc-800 bg-zinc-950 cursor-pointer hover:border-emerald-500/50">
+                            <input type="radio" name="q1" class="mr-3 accent-emerald-500">
+                            <span class="text-sm">Execute standalone scan without reporting results.</span>
+                        </label>
+                    </div>
+                </div>
+            `;
+            document.getElementById('submit-quiz').onclick = () => completeModule(id);
+            document.getElementById('quiz-modal').classList.remove('hidden');
+        }
+
+        function closeQuiz() {
+            document.getElementById('quiz-modal').classList.add('hidden');
+        }
+
+        function completeModule(id) {
+            progress[id] = true;
+            localStorage.setItem('eh_mastery_prog', JSON.stringify(progress));
+            closeQuiz();
+            renderModules();
+        }
+
+        function calculateStats() {
+            const total = courseData.length;
+            const completed = Object.values(progress).filter(Boolean).length;
+            const percent = Math.round((completed / total) * 100);
+
+            document.getElementById('prog-percent').innerText = `${percent}%`;
+            document.getElementById('prog-bar').style.width = `${percent}%`;
+            document.getElementById('human-bar').style.width = `${Math.min(percent + 20, 100)}%`;
+
+            // Role efficacy
+            const roles = ['scout', 'breacher', 'ghost', 'architect'];
+            roles.forEach((r, idx) => {
+                const roleTotal = courseData.filter(m => m.role === r).length;
+                const roleDone = courseData.filter(m => m.role === r && progress[m.id]).length;
+                const rolePercent = roleTotal > 0 ? Math.round((roleDone / roleTotal) * 100) : 0;
+                
+                document.getElementById(`score-${r}`).innerText = `${rolePercent}%`;
+                const effIndicator = document.getElementById(`eff-${idx+1}`);
+                if (rolePercent > 0) {
+                    effIndicator.classList.remove('bg-zinc-800');
+                    effIndicator.classList.add('bg-emerald-500');
+                    effIndicator.style.boxShadow = '0 0 10px rgba(16,185,129,0.5)';
+                } else {
+                    effIndicator.classList.add('bg-zinc-800');
+                    effIndicator.classList.remove('bg-emerald-500');
+                    effIndicator.style.boxShadow = 'none';
+                }
+            });
+        }
+
+        function resetAll() {
+            if(confirm("Erase all operational progress?")) {
+                progress = {};
+                localStorage.removeItem('eh_mastery_prog');
+                renderModules();
+            }
+        }
+
+        window.onload = renderModules;
+    </script>
+</body>
+</html>
